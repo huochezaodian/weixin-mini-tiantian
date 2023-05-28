@@ -7,7 +7,7 @@ Page({
   sendSubscribeMessage(e) {
     console.log('data:', this.data)
     const date = this.formatDate('yyyy年MM月dd日 hh:mm:ss', Date.now())
-    console.log('time', a)
+    console.log('time', date)
       //调用云函数，
       wx.cloud.callFunction({
       name: 'information',
