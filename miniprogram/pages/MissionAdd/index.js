@@ -6,16 +6,22 @@ Page({
   //发送消息
   sendSubscribeMessage(e) {
     console.log('data:', this.data)
+    const date = this.formatDate('yyyy年MM月dd日 hh:mm:ss', Date.now())
+    console.log('time', a)
       //调用云函数，
       wx.cloud.callFunction({
       name: 'information',
       //data是用来传给云函数event的数据，你可以把你当前页面获取消息填写到服务通知里面
       data: {
-          action: 'sendSubscribeMessage',
-          templateId: 'th8jLsRmBtsJAtTSpAE0EKE-Dc4Z7bgE4ybDTubK9_Y',//这里我就直接把模板ID传给云函数了
-          me:'Test_me',
-          name:'Test_activity',
-          _openid:'oE8aF5AEtY2oSASnrghfQU1Lz2Hw'//填入自己的openid
+        action: 'sendSubscribeMessage',
+        templateId: 'ZRQbnCiZtj_pwz8ayXiIZgsrYfULqKZlBt81QhBYWCc',//这里我就直接把模板ID传给云函数了
+        me:'Test_me',
+        name:'Test_activity',
+        _openid:'oE8aF5AEtY2oSASnrghfQU1Lz2Hw',//填入自己的openid
+        title: this.data.title,
+        desc: this.data.desc,
+        credit: this.data.credit,
+        date: date,
       },
       success: res => {
           console.warn('[云函数] [openapi] subscribeMessage.send 调用成功：', res)
@@ -90,6 +96,24 @@ Page({
       desc:"做点可口的饭菜，或者专门被指定的美食。我这个大厨，随便下，都好吃。",
     }],
     list: getApp().globalData.collectionMissionList,
+  },
+
+  formatDate(fmt, date) {
+    const d = new Date(date)
+    var o = {
+     "M+": d.getMonth() + 1,
+      "d+": d.getDate(),
+      "h+": d.getHours(),
+      "m+": d.getMinutes(),
+      "s+": d.getSeconds(),
+      "q+": Math.floor((d.getMonth() + 3) / 3),
+      S: d.getMilliseconds(),
+    };
+    if (/(y+)/.test(fmt)) fmt = fmt.replace(RegExp.$1, (d.getFullYear() + "").substr(4 - RegExp.$1.length));
+    for (var k in o)
+      if (new RegExp("(" + k + ")").test(fmt))
+        fmt = fmt.replace(RegExp.$1, RegExp.$1.length == 1 ? o[k] : ("00" + o[k]).substr(("" + o[k]).length));
+    return fmt;
   },
 
   //数据输入填写表单
