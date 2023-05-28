@@ -17,7 +17,7 @@ exports.main = async (event, context) => {
       touser: openid, // 发送通知给谁的openid(把上面挑好就行，这块不用动)
       data: {
         thing7: {
-          value: '叮咚~' + event.title
+          value: event.title.slice(0,10)
         },
         short_thing8: {
           value: event.credit
@@ -26,7 +26,7 @@ exports.main = async (event, context) => {
           value: event.date
         },
         thing6: {
-          value: event.desc
+          value: '叮咚~你的宝在努力学习哦'
         }
       },
       
